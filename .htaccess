@@ -1,0 +1,191 @@
+RewriteEngine On
+#PRODUCCION
+RewriteBase /
+#LOCAL
+#RewriteBase /LANDINGPAGE-SSP/
+
+# -------------------------------------------------
+# 🔒 1. Desactivar listado de directorios
+# -------------------------------------------------
+Options -Indexes
+
+# -------------------------------------------------
+# 🔒 2. Proteger archivos sensibles
+# -------------------------------------------------
+<Files config.php>
+    Require all denied
+</Files>
+
+<FilesMatch "\.(env|ini|log|sh|sql|bak|htaccess)$">
+    Require all denied
+</FilesMatch>
+
+# -------------------------------------------------
+# 🔒 3. BLOQUEAR BOTS DE SCRAPING AGRESIVO
+# -------------------------------------------------
+
+RewriteCond %{HTTP_USER_AGENT} (GPTBot|ClaudeBot|CCBot|Bytespider) [NC]
+RewriteRule .* - [F,L]
+
+# -------------------------------------------------
+# 🔒 4. Proteger carpetas sensibles
+# -------------------------------------------------
+# Bloquear todo Backend excepto endpoints específicos
+# NOTICIAS Backend LOCALHOST
+#RewriteCond %{REQUEST_URI} !^/LANDINGPAGE-SSP/Backend/Delete_Noticia\.php$
+#RewriteCond %{REQUEST_URI} !^/LANDINGPAGE-SSP/Backend/Edit_Noticia\.php$
+#RewriteCond %{REQUEST_URI} !^/LANDINGPAGE-SSP/Backend/get_boletines\.php$
+#RewriteCond %{REQUEST_URI} !^/LANDINGPAGE-SSP/Backend/get_noticias\.php$
+#RewriteCond %{REQUEST_URI} !^/LANDINGPAGE-SSP/Backend/Post_noticias\.php$
+
+#BACKEND LOGIN LOCALHOST
+#RewriteCond %{REQUEST_URI} !^/LANDINGPAGE-SSP/Backend/Post_LogOut\.php$
+#RewriteCond %{REQUEST_URI} !^/LANDINGPAGE-SSP/Backend/Post_Login\.php$
+
+#BACKEND LOCALHOST
+#RewriteCond %{REQUEST_URI} !^/LANDINGPAGE-SSP/Backend/Post_user\.php$
+#RewriteCond %{REQUEST_URI} !^/LANDINGPAGE-SSP/Backend/Delete_User\.php$
+
+#------------------
+# NOTICIAS Backend PRODUCCION
+RewriteCond %{REQUEST_URI} !^/Backend/Delete_Noticia\.php$
+RewriteCond %{REQUEST_URI} !^/Backend/Edit_Noticia\.php$
+RewriteCond %{REQUEST_URI} !^/Backend/get_boletines\.php$
+RewriteCond %{REQUEST_URI} !^/Backend/get_noticias\.php$
+RewriteCond %{REQUEST_URI} !^/Backend/Post_noticias\.php$
+
+#BACKEND LOGIN PRODUCCION
+RewriteCond %{REQUEST_URI} !^/Backend/Post_LogOut\.php$
+RewriteCond %{REQUEST_URI} !^/Backend/Post_Login\.php$
+
+#BACKEND PRODUCCION
+RewriteCond %{REQUEST_URI} !^/Backend/Post_user\.php$
+RewriteCond %{REQUEST_URI} !^/Backend/Delete_User\.php$
+
+RewriteRule ^Backend/ - [F,L]
+
+# -------------------------------------------------
+# 🔒 5. PROTECCIÓN HOTLINK IMÁGENES
+# -------------------------------------------------
+
+#COMNETAR CUANDO ESTE EN LOCAL
+#RewriteCond %{HTTP_REFERER} !^$
+#RewriteCond %{HTTP_REFERER} !^https://cuatro-ojos\.com\.mx [NC]
+#RewriteRule \.(jpg|jpeg|png|webp)$ - [F]
+
+# -------------------------------------------------
+# 🔒 6. Forzar HTTPS (activar solo si ya tienes SSL)
+# -------------------------------------------------
+#RewriteCond %{HTTPS} off
+#RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# -------------------------------------------------
+# 🔒 7. HEADERS DE SEGURIDAD
+# -------------------------------------------------
+
+<IfModule mod_headers.c>
+
+Header always set X-Frame-Options "SAMEORIGIN"
+Header always set X-Content-Type-Options "nosniff"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+
+# HSTS (solo si ya usas HTTPS)
+#Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+</IfModule>
+
+# -------------------------------------------------
+# ⚡ 8. COMPRESIÓN GZIP
+# -------------------------------------------------
+
+<IfModule mod_deflate.c>
+
+AddOutputFilterByType DEFLATE text/plain
+AddOutputFilterByType DEFLATE text/html
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE application/xml
+AddOutputFilterByType DEFLATE application/xhtml+xml
+AddOutputFilterByType DEFLATE application/rss+xml
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-javascript
+AddOutputFilterByType DEFLATE application/json
+
+</IfModule>
+
+# -------------------------------------------------
+# ⚡ 9. CACHE DEL NAVEGADOR
+# -------------------------------------------------
+
+<IfModule mod_expires.c>
+
+ExpiresActive On
+
+# Imágenes
+ExpiresByType image/jpg "access 1 year"
+ExpiresByType image/jpeg "access 1 year"
+ExpiresByType image/png "access 1 year"
+ExpiresByType image/webp "access 1 year"
+
+# CSS
+ExpiresByType text/css "access 1 month"
+
+# JS
+ExpiresByType application/javascript "access 1 month"
+
+# Fuentes
+ExpiresByType font/woff2 "access 1 year"
+
+</IfModule>
+
+
+# -------------------------------------------------
+# 🔒 10. NO REESCRIBIR ARCHIVOS REALES
+# -------------------------------------------------
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# -------------------------------------------------
+# 🌐 11. RUTAS LIMPIAS
+# -------------------------------------------------
+RewriteRule ^Inicio$ index.php [L]
+RewriteRule ^Noticias$ Frontend/Noticias.php [L]
+RewriteRule ^Boletines$ Frontend/Boletines.php [L]
+RewriteRule ^Bienvenida$ Frontend/Bienvenida.php [L]
+RewriteRule ^Nosotros$ Frontend/Nosotros.php [L]
+RewriteRule ^SecretariadoEjecutivo$ Frontend/Secretariado.php [L]
+RewriteRule ^Directorio$ Frontend/Directorio.php [L]
+RewriteRule ^Contáctanos$ Contactanos.php [L]
+RewriteRule ^Docs$ Frontend/VerNoticias.php [L]
+RewriteRule ^EditNews$ Frontend/EditNoticia.php [L]
+RewriteRule ^CALEA$ Frontend/CALEA.php [L]
+RewriteRule ^Proximidad$ Frontend/ProxSocial.php [L]
+RewriteRule ^Servicios$ Frontend/Servicios.php [L]
+RewriteRule ^Públicos$ Frontend/Publicos.php [L]
+RewriteRule ^Escuela$ Frontend/Escuela.php [L]
+RewriteRule ^Empeno$ Frontend/Empeno.php [L]
+RewriteRule ^Cerrajerías$ Frontend/Cerrajerias.php [L]
+RewriteRule ^TramitesVehiculares$ Frontend/Vehiculares.php [L]
+RewriteRule ^DepósitoVehicular$ Frontend/Deposito.php [L]
+RewriteRule ^Licencias$ Frontend/Licencias.php [L]
+RewriteRule ^SeguridadPrivada$ Frontend/Seguridad.php [L]
+RewriteRule ^Fortaseg$ Frontend/Fortaseg.php [L]
+
+# -------------------------------------------------
+# 👤 12. PANEL DE USUARIO
+# -------------------------------------------------
+RewriteRule ^LogIn$ Frontend/Login.php [L]
+RewriteRule ^Usuario$ Frontend/Panel.php [L]
+RewriteRule ^PanelNoticias$ Frontend/PanelNoticias.php [L]
+RewriteRule ^LogOut$ Backend/Post_LogOut.php [L]
+RewriteRule ^DeleteNews$ Backend/Delete_Noticia.php [L]
+
+# -------------------------------------------------
+# 🔧 13. QUITAR .PHP DE LAS URLS
+# -------------------------------------------------
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L]
+

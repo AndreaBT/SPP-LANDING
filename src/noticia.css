@@ -1,0 +1,250 @@
+.heroN{
+    position:relative;
+    min-height:20vh;
+    display:grid;
+    place-items:center;
+    text-align:center;
+    overflow:hidden;
+    color:#fff
+}
+.heroN::before{
+    content:"";
+    position:absolute;
+    inset:-15% -10%;
+    background:radial-gradient(60% 60% at 50% 40%, rgba(3,9,238,1), transparent 60%), 
+    radial-gradient(40% 50% at 40% 40%, rgba(146,28,41,1), transparent 60%), 
+    linear-gradient(135deg, #0b0f1a 0%, #141a24 100%);
+    background-size: 300% 300%;
+    animation: waveMotion 25s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes waveMotion {
+  0% {
+    background-position: 0% 0%, 50% 50%, 0% 0%;
+  }
+  25% {
+    background-position: 25% 50%, 75% 25%, 50% 25%;
+  }
+  50% {
+    background-position: 50% 100%, 25% 75%, 100% 50%;
+  }
+  75% {
+    background-position: 75% 50%, 50% 25%, 50% 75%;
+  }
+  100% {
+    background-position: 100% 0%, 0% 50%, 0% 0%;
+  }
+}
+.heroN .content{
+    position:relative;
+    z-index:1
+}
+.eyebrowN{
+    font-size:.75rem;
+    text-transform:uppercase;
+    letter-spacing:.2em;
+    color:rgba(255,255,255,.8)
+}
+.heroN h1{
+    margin:.35em 0
+}
+
+
+.header {
+    padding: 40px 20px;
+    background: white;
+    border-bottom: 3px solid #003a70;
+}
+.header h1 {
+    margin: 0;
+    color: #003a70;
+    font-size: 32px;
+}
+
+.filters {
+    display: flex;
+    gap: 15px;
+    padding: 20px;
+    background: #0b0f1a;
+    border-bottom: 1px solid #ddd;
+    flex-wrap: wrap;
+}
+
+.filters input,
+.filters select {
+    padding: 10px 15px;
+    border: 1px solid #cdd4da;
+    border-radius: 8px;
+    font-size: 15px;
+    width: 200px;
+    background: #fff;
+    transition: 0.2s;
+}
+
+.filters input:focus,
+.filters select:focus {
+    border-color: #0b0f1a;
+    outline: none;
+}
+
+
+.filters input[type="text"] {
+    width: 200px;
+    padding: 10px 15px 10px 42px; /* espacio para la lupa */
+    border: 1px solid #cdd4da;
+    border-radius: 8px;
+    font-size: 15px;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='%236c757d' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 10-1.397 1.398h-.001l3.85 3.85a1 1 0 001.415-1.414l-3.867-3.834zM12 6.5a5.5 5.5 0 11-11 0 5.5 5.5 0 0111 0z'/%3E%3C/svg%3E") 
+    no-repeat 12px center;
+    background-size: 18px;
+    transition: 0.2s;
+}
+
+/* Efecto focus más institucional */
+.filters input[type="text"]:focus {
+    border-color: #0b0f1a;
+    box-shadow: 0 0 0 3px rgba(11, 15, 26, 0.15);
+    outline: none;
+}
+/* ====== MÓVIL ====== */
+/* ============================= */
+/* RESPONSIVE FILTROS - MÓVIL  */
+/* ============================= */
+
+@media (max-width: 768px) {
+
+    .filters {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* 2 columnas */
+        gap: 12px;
+    }
+
+    /* Buscador ocupa toda la primera fila */
+    .filters input[type="text"] {
+        grid-column: 1 / -1; /* ocupa ambas columnas */
+        width: 100%;
+    }
+
+    /* Selects ocupan una columna cada uno */
+    .filters select {
+        width: 100%;
+    }
+
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 25px;
+    padding: 40px 0;
+}
+
+.news-card {
+    background: #0b0f1a;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    cursor: pointer;
+    transition: transform .25s ease, box-shadow .25s ease;
+    color:#64748b;
+    border: 1px solid #64748b;
+}
+
+.news-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 26px rgba(0,0,0,0.12);
+}
+
+.news-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.news-info {
+    padding: 18px 20px;
+    color:#64748b;
+}
+
+.news-info h3{
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.news-info p{
+    font-family: 'JuraMedium';
+    color: #64748b;
+}
+
+/* Contenedor del paginador */
+#pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+/* Botones */
+#pagination button {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 10px;
+    border-radius: 8px;
+    border: 1px solid #e2e2e2;
+    background-color: #ffffff;
+    color: #0f131b;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+/* Hover */
+#pagination button:hover:not(:disabled):not(.active) {
+    background-color: #f4cd3f;
+    border-color: #f4cd3f;
+    color: #0f131b;
+}
+
+/* Página activa */
+#pagination button.active {
+    background-color: #0f131b;
+    color: #f4cd3f;
+    border-color: #0f131b;
+    font-weight: 600;
+    pointer-events: none;
+}
+
+/* Flechas */
+#pagination button:first-child,
+#pagination button:last-child {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Botones deshabilitados */
+#pagination button:disabled {
+    background-color: #e2e2e2;
+    color: #9ca3af;
+    border-color: #e2e2e2;
+    cursor: not-allowed;
+}
+
+/* Puntos (...) */
+#pagination .dots {
+    padding: 0 8px;
+    color: #e2e2e2;
+    font-weight: 600;
+    user-select: none;
+}
+
+#pagination button:hover:not(:disabled):not(.active) {
+    box-shadow: 0 4px 10px rgba(15, 19, 27, 0.15);
+}
+
+
+
+

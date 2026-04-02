@@ -1,0 +1,430 @@
+/* ======= Tokens (respeta paleta original) ======= */
+:root{
+    --ssp-dark: #3f3e40;           /* footer/original */
+    --ssp-blue: #0309ee;           /* blob original */
+    --ssp-burgundy: #921c29;       /* blob original */
+    --ssp-accent: #f4cd3f;      /* acento dorado/estrella */
+    --ssp-ink: #0e0f12;            /* tono técnico para fondos */
+}
+
+a{
+    text-decoration:none;
+}
+
+a p{
+    color: #e2e2e2 !important;
+    text-decoration: none;
+}
+
+/*TIPOGRAFÍAS*/
+
+@font-face {
+    font-family: 'Jurabook';
+    src:  url('../src/fonts/JuraBook.ttf');
+}
+
+.Jura{
+    font-family: 'Jurabook';
+}
+
+@font-face {
+    font-family: 'Jurademibold';
+    src:  url('../src/fonts/JuraDemiBold.ttf');
+}
+
+
+.Jurabold{
+    font-family: 'Jurademibold';
+}
+
+@font-face {
+    font-family: 'JuraLight';
+    src:  url('../src/fonts/JuraLight.ttf');
+}
+
+.Juraligt{
+    font-family: 'JuraLight';
+    
+}
+
+@font-face {
+    font-family: 'JuraMedium';
+    src:  url('../src/fonts/JuraMedium.ttf');
+
+}
+
+.Juramedium{
+    font-family: 'JuraMedium';
+    font-weight:500;
+}
+
+@font-face {
+    font-family: 'RussoOne';
+    src: url('fonts/Russo_One.ttf') format('truetype');
+}
+
+.Russ{
+    font-family: 'RussoOne';
+    font-weight:700;
+    color:#e2e2e2 !important;
+}
+
+/* ======= Reset mínimo de accesibilidad ======= */
+.skip-to-content{
+    position:absolute;
+    left:-9999px;
+    top:0;
+    background:#e2e2e2;
+    color:#000;
+    padding:.5rem 1rem;
+    z-index:1000
+}
+
+.skip-to-content:focus{
+    left:1rem;
+    top:1rem;
+    border-radius:.5rem;
+    box-shadow:0 0 0 3px rgba(34,211,238,.5)
+}
+
+/* ======= Header ======= */
+.navbar-ssp{
+    background:rgba(12,13,16,.9);
+    backdrop-filter:saturate(140%) blur(8px);
+    border-bottom:1px solid rgba(255,255,255,.08)
+}
+.navbar-brand img{
+    height:28px
+}
+.nav-link{
+    letter-spacing:.2px
+}
+.dropdown-menu{
+    --bs-dropdown-bg:#3f3e40 !important;
+    --bs-dropdown-link-color:#e2e2e2 !important;
+    --bs-dropdown-link-hover-bg:#1f232a !important;
+}
+
+.color-nav-items{
+    background-color: #3f3e40;
+    color: #e2e2e2 !important;
+}
+
+.colorLi{
+    color: #e2e2e2 !important;
+}
+
+/* ======= Hero ======= */
+.hero{
+    position: relative;
+    min-height: 52vh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    overflow: hidden;
+    color: #e2e2e2;
+
+    background-image: url('images/portada2.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+/* Tablets */
+@media (max-width: 992px){
+    .hero{
+        min-height: 30vh;
+        background-position: 50% center; 
+    }
+}
+
+/* Móvil */
+@media (max-width: 768px){
+    .hero{
+        background-image: url('images/banner movil.png');
+        background-position: center;
+        min-height: 100svh;
+    }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px){
+    .hero{
+        background-image: url('images/banner movil.png');
+        min-height: 67svh;
+        background-position: 80% center;
+    }
+}
+
+
+
+
+.eyebrow{
+    font-size:.75rem;
+    text-transform:uppercase;
+    letter-spacing:.2em;
+    color:rgba(255,255,255,.8)
+}
+.hero h1{
+    margin:.35em 0
+}
+.typed-wrap{
+    min-height:1.75rem
+}
+
+/* ======= Quick actions ======= */
+.qa-card{
+    height:100%;
+    background:#0f131b;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:1rem;
+    padding:1rem;
+    display:flex;
+    align-items:center;
+    gap:.6rem;
+    transition:transform .15s ease, border-color .2s;
+    color: #e2e2e2 !important;
+}
+.qa-card:hover{
+    transform:translateY(-2px);
+    border-color:rgba(255,255,255,.18)
+}
+.qa-icon{
+    width:35px;
+    height:35px;
+    flex:0 0 auto;
+    border-radius:.75rem;
+    /*background:linear-gradient(135deg,var(--ssp-blue),var(--ssp-burgundy));*/
+    background-color:  #d6b42b;
+    display:grid;
+    place-items:center
+}
+.qa-icon img{
+    width:22px;
+    height:22px;
+    filter:grayscale(1) brightness(3)
+}
+
+/* ======= Tarjetas de noticias/boletines ======= */
+.card-ssp{
+    height:100%;
+    background:#0f131b;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:1rem;overflow:hidden
+}
+.card-ssp .thumb{
+    aspect-ratio:16/9;
+    object-fit:cover;
+    width:100%
+}
+.card-ssp .body{
+    padding:1rem
+}
+.card-ssp .title{
+    min-height:3.25rem
+}
+
+/* ======= Secciones ======= */
+section{
+    padding-block:3.5rem
+}
+
+.section-us{
+    padding-block:9.0rem
+}
+.section-header .Russ{
+    border-left:6px solid var(--ssp-accent);padding-left:.75rem
+}
+
+/* ======= Footer ======= */
+.footer-ssp{
+    background:var(--ssp-dark);color:#e2e2e2
+}
+.footer-ssp a{
+    color:#e2e2e2;text-decoration:none
+}
+.footer-ssp .social a{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:36px;
+    height:36px;
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:.5rem;
+    margin-right:.5rem
+}
+
+/* ======= Typography (respeta clases existentes) ======= */
+/* No cambiamos las fuentes; asumimos que .Russ y .Juramedium vienen en /src/style.css */
+
+
+body{
+    background:#000;
+    
+}
+
+/*hover de links - simpre amarillo SSP*/
+li a:hover{
+    color: #f4cd3f !important;
+}
+
+/*card de bienvenida*/
+.card-bienvenida{
+    height:100%;
+    background:#0f131b;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:1rem;overflow:hidden;
+    color:#e2e2e2;
+}
+
+/*shados cards*/
+.shadow-card{
+    box-shadow: 0px 1px 10px rgba(245, 197, 66, 1);
+    transition: all 400ms ease;
+}
+
+.shadow-card:hover{
+    transition: all 400ms ease;
+    transform: translateY(-3%)
+}
+
+label{
+    color:#e2e2e2 !important;
+}
+
+/*CARD COMUNICATE*/
+.card-comunicate{
+    height:100%;
+    background:#0f131b;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:1rem;overflow:hidden;
+    color:#e2e2e2;
+}
+
+/*shados cards*/
+.shadow-card-comunicate{
+    box-shadow: 0px 1px 10px rgba(234, 236, 239, 1);
+}
+
+
+/*CALEA*/
+.heroCALEA{
+    position:relative;
+    min-height:20vh;
+    display:grid;
+    place-items:center;
+    text-align:center;
+    overflow:hidden;
+    color:#fff
+}
+.heroCALEA::before{
+    content:"";
+    position:absolute;
+    inset:-15% -10%;
+    background:radial-gradient(60% 60% at 50% 40%, rgba(0,0,0,1), transparent 60%), 
+    radial-gradient(40% 50% at 40% 40%, rgba(0,0,0,1), transparent 60%), 
+    linear-gradient(135deg, #000 0%, #000 100%);
+    background-size: 300% 300%;
+    animation: waveMotionC 25s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes waveMotionC {
+  0% {
+    background-position: 0% 0%, 50% 50%, 0% 0%;
+  }
+  25% {
+    background-position: 25% 50%, 75% 25%, 50% 25%;
+  }
+  50% {
+    background-position: 50% 100%, 25% 75%, 100% 50%;
+  }
+  75% {
+    background-position: 75% 50%, 50% 25%, 50% 75%;
+  }
+  100% {
+    background-position: 100% 0%, 0% 50%, 0% 0%;
+  }
+}
+.heroCALEA .content{
+    position:relative;
+    z-index:1
+}
+
+.hero-CALEA h1{
+    margin:.35em 0
+}
+
+/*PROX SOCIAL*/
+.heroProx{
+    position:relative;
+    min-height:20vh;
+    display:grid;
+    place-items:center;
+    text-align:center;
+    overflow:hidden;
+    color:#fff
+}
+.heroProx::before{
+    content:"";
+    position:absolute;
+    inset:-15% -10%;
+    background:radial-gradient(60% 60% at 50% 40%, rgba(226,226,226,1), transparent 60%), 
+    radial-gradient(40% 50% at 40% 40%, rgba(226,226,226,1), transparent 60%), 
+    linear-gradient(135deg, #e2e2e2 0%, #e2e2e2 100%);
+    background-size: 300% 300%;
+    animation: waveMotionP 25s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes waveMotionP {
+  0% {
+    background-position: 0% 0%, 50% 50%, 0% 0%;
+  }
+  25% {
+    background-position: 25% 50%, 75% 25%, 50% 25%;
+  }
+  50% {
+    background-position: 50% 100%, 25% 75%, 100% 50%;
+  }
+  75% {
+    background-position: 75% 50%, 50% 25%, 50% 75%;
+  }
+  100% {
+    background-position: 100% 0%, 0% 50%, 0% 0%;
+  }
+}
+.heroProx .content{
+    position:relative;
+    z-index:1
+}
+
+.heroProx h1{
+    margin:.35em 0
+}
+
+/*SERVICIOS PUBLICOS*/
+.qa-icons{
+    width:35px;
+    height:35px;
+    flex:0 0 auto;
+    border-radius:.75rem;
+    /*background:linear-gradient(135deg,var(--ssp-blue),var(--ssp-burgundy));*/
+    background-color:  #0f131b;
+    display:grid;
+    place-items:center
+}
+.qa-icons img{
+    width:40px;
+    height:40px;
+    /*filter:grayscale(1) brightness(3)*/
+}
+
+/*noticia img*/
+.noticia-img{
+    width: 100%;
+    max-width: 871px;
+    height: auto;
+    max-height: 573px;
+}
+

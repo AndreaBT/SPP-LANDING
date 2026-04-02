@@ -1,0 +1,18 @@
+{
+    "name": "ssp/landingpage-ssp",
+    "description": "Landing Page actualizada de la SSP -Derechos reservados a  Dirección de Difusión y Comunicación de la SSP - Código:  Ing. Andrea Turriza",
+    "autoload": {
+        "psr-4": {
+            "Ssp\\LandingpageSsp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ing. Andrea Beatriz Turriza Peña"
+        }
+    ],
+    "require": {
+        "google/apiclient": "2.14"
+    }
+}
+

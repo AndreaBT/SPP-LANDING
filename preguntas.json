@@ -1,0 +1,113 @@
+[
+    {
+        "categoria": "Vialidad",
+        "pregunta" : "Son las señales que sirven para guiar al usuario a lo largo de su camino informándole sobre números de carreteras y destinos, así como sus distancias.",
+        "respuesta": "Señales Informativas",
+        "incorrecta1": "Señales Preventivas",
+        "incorrecta2": "Señales Restrictivas"
+    },
+
+    {
+        "categoria": "Vialidad",
+        "pregunta" : "¿Qué indica la raya sencilla continua que se encuentra pintada sobre el centro del pavimento?",
+        "respuesta": "Prohibición de cambio de carril",
+        "incorrecta1": "Mantener la velocidad",
+         "incorrecta2": "Puede cambiar de carril para rebasar"
+    },
+
+    {
+        "categoria": "Vialidad",
+        "pregunta" : "Para adelantar a un vehículo en una vía de circulación en ambos sentidos, se debe hacer por el lado:",
+        "respuesta": "Izquierdo",
+        "incorrecta1": "Derecho",
+         "incorrecta2": "Cualquiera"
+    },
+
+    {
+        "categoria": "Vialidad",
+        "pregunta" : "Se emplean para delinear la orilla de una vía de circulación y sirven para auxiliar al conductor durante la noche, o bien, bajo condiciones climatológicas desfavorables",
+        "respuesta": "Postes Fantasmas",
+        "incorrecta1": "Rayas Longitudinales",
+         "incorrecta2": "Isletas"
+    },
+
+    {
+        "categoria": "Vialidad",
+        "pregunta" : "Son señales que tienen por objeto advertir la existencia y naturaleza de un peligro en el camino",
+        "respuesta": "Preventivas",
+        "incorrecta1": "Restictivas",
+         "incorrecta2": "Informativas"
+    },
+
+    {
+        "categoria": "Vialidad",
+        "pregunta" : "El destello ámbar del semáforo indica",
+        "respuesta": "Precaución",
+        "incorrecta1": "Preferencia",
+         "incorrecta2": "Continuar"
+    },
+
+    {
+        "categoria": "Vialidad",
+        "pregunta" : "Es la velocidad máxima permitida en carreteras estatales:",
+        "respuesta": "80 Km/h",
+        "incorrecta1": "100 Km/h",
+         "incorrecta2": "90 Km/h"
+    },
+
+    {
+        "categoria": "Vialidad",
+        "pregunta" : "¿Qué indica la raya sencilla discontinua que se encuentra pintada sobre el centro del pavimento",
+        "respuesta": "Puede cambiar de carril para adelantar",
+        "incorrecta1": "Prohibición de cambio de carril",
+         "incorrecta2": "Mantener la velocidad"
+    },
+
+    {
+        "categoria": "Vialidad",
+        "pregunta" : "Son señales que tienen por objeto indicar la existencia de ciertas limitaciones o prohibiciones que regulan el tránsito",
+        "respuesta": "Restrictivas",
+        "incorrecta1": "Preventivas",
+         "incorrecta2": "Informativas"
+    },
+
+    {
+        "categoria": "Vialidad",
+        "pregunta" : "Hasta cuántos metros como máximo le está permitido retroceder en vehículo",
+        "respuesta": "15 metros",
+        "incorrecta1": "20 metros",
+         "incorrecta2": "10 metros"
+    },
+
+    {
+        "categoria": "Vialidad",
+        "pregunta" : "¿Cuál es la distancia mínima para estacionarse en una intersección?",
+        "respuesta": "15 metros",
+        "incorrecta1": "20 metros",
+         "incorrecta2": "10 metros"
+    },
+
+    {
+        "categoria": "Vialidad",
+        "pregunta" : "Antes de cambiar de carril, de adelantar o de dar vuelta (izquierda o derecha) se debe accionar",
+        "respuesta": "Luces Direccionales",
+        "incorrecta1": "Luces de Estacionamiento",
+         "incorrecta2": "Luces Intermitentes"
+    },
+
+    {
+        "categoria": "Vialidad",
+        "pregunta" : "Después de vencida la licencia de conducir ¿cuántos días de prorroga tengo para seguir conduciendo con ella?",
+        "respuesta": "Ninguno",
+        "incorrecta1": "15 días",
+         "incorrecta2": "30 días"
+    },
+
+    {
+        "categoria": "Vialidad",
+        "pregunta" : "¿Cuál es el timpo máximo para inscribir un cambio de propietario en el módulo de Registro Estatal de Control Vehicular?",
+        "respuesta": "30 días",
+        "incorrecta1": "45 días",
+         "incorrecta2": "15 días"
+    }
+]

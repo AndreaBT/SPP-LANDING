@@ -1,0 +1,248 @@
+   .collapse-button{
+        background-color: #fff;
+        border: none;
+
+    }
+    .collapse-button2{
+        background-color: #fff;
+        border: none;
+
+    }
+    .collapse-button3{
+        background-color: #fff;
+        border: none;
+
+    }
+    .collapse-button4{
+        background-color: #fff;
+        border: none;
+
+    }
+    .collapse-button5{
+        background-color: #fff;
+        border: none;
+
+    }
+    .collapse-button6{
+        background-color: #fff;
+        border: none;
+
+    }
+    .collapse-content.show {
+        /* display: none; */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 1s ease-out; 
+    }
+
+    .collapse-content2.show {
+        /* display: none; */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 1s ease-out; 
+    }
+
+    .collapse-content3.show {
+        /* display: none; */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 1s ease-out; 
+    }
+
+    .collapse-content4.show {
+        /* display: none; */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 1s ease-out; 
+    }
+
+    .collapse-content5.show {
+        /* display: none; */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 1s ease-out; 
+    }
+
+    .collapse-content6.show {
+        /* display: none; */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 1s ease-out; 
+    }
+
+    #chart{
+        /* color:#666; */
+        text-align:left;
+    }
+
+    #chart a{color:#649812;}
+
+    #chart li, #chart ul li {
+
+    list-style:none;
+
+    list-style-image:none;
+
+    }
+
+    #chart, #chart ul, #chart ul ul {
+        background-color: #fff;
+
+    margin:0;
+
+    padding:0;
+
+    }
+
+    #chart ul ul {
+
+    background:#FFFFFF url(/src/images/org-ver.gif) repeat-y 19px top;
+
+    }
+
+    #chart ul li {
+
+    padding:10px 0 0 0;
+
+    margin:0 0 0 -1px;
+
+    }
+
+    #chart ul ul li {
+
+    padding:10px 0 0 60px;
+
+    margin:0 0 0 -1px;
+
+    }
+
+    #chart li {
+
+    margin:0;
+
+    padding:0;
+
+    }
+
+    #chart ul ul li {
+
+    background:transparent url(/src/images/org-inf-izq.gif) no-repeat 20px top;
+
+    }
+
+    #chart ul ul li.last {
+
+    background:#FFFFFF url(/src/images/org-inf-izq.gif) no-repeat 20px top;
+
+    }
+
+    #chart span.open {
+
+    margin:0;
+
+    width:20px;
+
+    height:19px;
+
+    background:#FFFFFF url(../imagen/org-menos.gif) no-repeat left -1px;
+
+    float:left;
+
+    cursor:pointer;
+
+    }
+
+    #chart span.close {
+
+    margin:0;
+
+    width:20px;
+
+    height:19px;
+
+    background:#FFFFFF url(../imagen/org-mas.gif) no-repeat left -1px;
+
+    float:left;
+
+    cursor:pointer;
+
+    }
+
+    #chart span.nada {
+
+    margin:0;
+
+    width:20px;
+
+    height:50px;
+
+    background:transparent url(/src/images/org-nada.gif) no-repeat left -1px;
+
+    float:left;
+
+    }
+
+    #chart div.entidad {
+
+    font-size:12px;
+
+    margin:0;
+
+    padding:0px;
+
+        padding-left:3px;
+
+    margin-left:20px;
+
+        padding-left:5px;
+
+        background-color:#FFFFFF;
+
+        min-height:40px;
+
+    }
+
+    #chart div.f {
+
+        font-size:12px;
+
+        font-weight:bold;
+
+    }
+
+    #chart div.p {
+
+        font-size:12px;
+
+        font-weight:bold;
+
+    }
+
+    #chart div.a {
+
+        font-size:12px;
+
+        font-weight:normal;
+
+    }
+
+    #chart li.dep {
+
+        padding:0 0 0 25px;
+
+        background:#FFFFFF url(../imagen/palomita.gif) no-repeat 3px top;
+
+    }
+
+    .open-all, .close-all{
+        text-decoration:none;
+        color:#649812;
+    }
+
+    .open-all .max, .close-all .min{
+        width:20px;
+        height:19px;
+        display:inline-block;
+        vertical-align:middle;
+    }
+    
