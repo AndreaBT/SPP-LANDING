@@ -4,49 +4,99 @@ include '../dbsettings/conexion.php';
 
 if(isset($_POST['Guardar'])){
 
-    $fecha = $_POST['datenoti'];
-    $nombre = $_POST['titulonoti'];
-    $caracteristica = $_POST['caracteristica'];
-    $descripcion = $_POST['txtDescripcion'];
-    $descripcion2 = "";
-    $imagen = $_FILES['noticiaimg']['name'];
-    $imagen2 = $_FILES['noticiaimg2']['name'];
-    $Tnoticia = "";
-    $Ncomunicado = $_POST['Ncomunicado'];
+    //TABLE NOTICIA
+    $titulo = $_POST['titulo'];
+    $fecha = $_POST['fecha'];
+    $id_tipo  = $_POST['id_tipo'];
+    $comunicado = "";
+    $imagenvali = $_FILES['noticiaimg']['name'];
 
-    if(isset($imagen) && $imagen != ""){
-        $tipo = $_FILES['noticiaimg']['type'];
-        $temp  = $_FILES['noticiaimg']['tmp_name'];
+    $conn->beginTransaction();
 
-        $tipo2 = $_FILES['noticiaimg2']['type'];
-        $temp2  = $_FILES['noticiaimg2']['tmp_name'];
+    try {
 
-        $sql = "INSERT INTO  noticias   (titulonoti, noticiaimg, descrinoti, noticiaimg2, datenoti, Tnoticia, descripcion2,caracteristica, Ncomunicado) 
-        VALUES (:titulonoti, :noticiaimg, :descrinoti, :noticiaimg2, :datenoti, :Tnoticia, :descripcion2,:caracteristica,:Ncomunicado)";
+        // INSERT 1: noticias
+        $sql = "INSERT INTO noticias (titulo, fecha, id_tipo, comunicado) 
+        VALUES (:titulo, :fecha, :id_tipo, :comunicado)";
 
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':titulonoti', $nombre);
-        $stmt->bindParam(':noticiaimg', $imagen );
-        $stmt->bindParam(':descrinoti', $descripcion);
-        $stmt->bindParam(':noticiaimg2', $imagen2);
-        $stmt->bindParam(':datenoti', $fecha);
-        $stmt->bindParam(':Tnoticia', $Tnoticia);
-        $stmt->bindParam(':descripcion2', $descripcion2);
-        $stmt->bindParam(':caracteristica', $caracteristica);
-        $stmt->bindParam(':Ncomunicado', $Ncomunicado);
+        $stmt->bindParam(':titulo', $titulo);
+        $stmt->bindParam(':fecha', $fecha);
+        $stmt->bindParam(':id_tipo', $id_tipo);
+        $stmt->bindParam(':comunicado', $comunicado);
 
-        move_uploaded_file($temp,'../panel/imgnoticia/'.$imagen);  
-        move_uploaded_file($temp2,'../panel/imgnoticia/'.$imagen2);  
-        
-        if ($stmt->execute()) {
-            
-            $_SESSION['mensaje'] = 'se ha subido correctamente';
-            $_SESSION['tipo'] = 'success';
-            header("Location: " . BASE_URL . "Frontend/PanelNoticias.php");
-        }else {
-            header("Location: " . BASE_URL . "Frontend/Panel.php");
+        $stmt->execute();
+
+        //  Obtener el ID generado
+        $id_noticia = $conn->lastInsertId();
+
+        // Subir imagen
+        $imagen_default = 'banner_ssp_informa_web.png';
+        $imagen = $imagen_default;
+
+        if (!empty($_FILES['noticiaimg']['name'])) {
+
+            $nombreOriginal = $_FILES['noticiaimg']['name'];
+            $temp = $_FILES['noticiaimg']['tmp_name'];
+            $extension = strtolower(pathinfo($nombreOriginal, PATHINFO_EXTENSION));
+
+            $extensionesPermitidas = ['jpg', 'jpeg', 'png', 'webp'];
+
+            if (in_array($extension, $extensionesPermitidas)) {
+
+                // Generar nombre único
+                $imagen = 'noticia_' . $id_noticia . '_' . uniqid() . '.' . $extension;
+
+                if (!move_uploaded_file($temp, '../panel/imgnoticia/' . $imagen)) {
+                    // Si falla la subida, usar default
+                    $imagen = $imagen_default;
+                }
+
+            } else {
+                // Extensión no válida, usar default
+                $imagen = $imagen_default;
+            }
         }
 
-        
+        // INSERT 2: imagenes_noticia
+        $sql2 = "INSERT INTO imagenes_noticia (id_noticia, url) 
+        VALUES (:id_noticia, :url)";
+
+        $stmt2 = $conn->prepare($sql2);
+        $stmt2->bindParam(':id_noticia', $id_noticia);
+        $stmt2->bindParam(':url', $imagen);
+
+        $stmt2->execute();
+
+        //INSERT 3: Contenido_noticia
+        $contenido = $_POST['txtDescripcion'];
+        $orden = $_POST['orden'];
+
+        $sql3 = "INSERT INTO contenido_noticia (id_noticia, contenido, orden) 
+        VALUES (:id_noticia, :contenido, :orden)";
+
+        $stmt3 = $conn->prepare($sql3);
+        $stmt3->bindParam(':id_noticia', $id_noticia);
+        $stmt3->bindParam(':contenido', $contenido);
+        $stmt3->bindParam(':orden', $orden);
+
+        $stmt3->execute();
+
+        // Confirmar todo
+        $conn->commit();
+
+        $_SESSION['mensaje'] = 'Se ha subido correctamente';
+        $_SESSION['tipo'] = 'success';
+        header("Location: " . BASE_URL . "Frontend/PanelNoticias.php");
+
+    } catch (Exception $e) {
+
+        // Si algo falla, revertir todo
+        $conn->rollBack();
+
+        $_SESSION['mensaje'] = 'Error al guardar la noticia';
+        $_SESSION['tipo'] = 'error';
+        header("Location: " . BASE_URL . "Frontend/Panel.php");
     }
+    
 }

@@ -14,27 +14,27 @@ $limit = 5; // noticias por página
 $offset = ($page - 1) * $limit;
 
 // Construcción dinámica del WHERE
-$where = "WHERE caracteristica = :caracteristica";
+$where = "WHERE n.id_tipo = :caracteristica";
 $params = [
-    ':caracteristica' => "Noticia"
+    ':caracteristica' => 1
 ];
 
 // Filtro: texto
 if (!empty($search)) {
-    $where .= " AND (titulonoti LIKE :search OR descrinoti LIKE :search) ";
+    $where .= " AND (n.titulo LIKE :search OR cn.contenido LIKE :search) ";
     $params[':search'] = "%$search%";
 }
 
 // Filtro: mes
 if ($month !== '') {
     // +1 porque JS manda meses 0–11
-    $where .= " AND MONTH(datenoti) = :month ";
+    $where .= " AND MONTH(n.fecha) = :month ";
     $params[':month'] = intval($month) + 1;
 }
 
 // Filtro: año
 if ($year !== '') {
-    $where .= " AND YEAR(datenoti) = :year ";
+    $where .= " AND YEAR(n.fecha) = :year ";
     $params[':year'] = intval($year);
 }
 
@@ -42,7 +42,9 @@ if ($year !== '') {
 // ==============================
 // 1) Obtener total de registros
 // ==============================
-$countQuery = "SELECT COUNT(*) as total FROM noticias $where";
+$countQuery = "SELECT COUNT(*) as total FROM noticias as n
+INNER JOIN imagenes_noticia as im ON n.id_noticia = im.id_noticia  
+INNER JOIN contenido_noticia as cn ON n.id_noticia = cn.id_noticia $where";
 $stmt = $conn->prepare($countQuery);
 $stmt->execute($params);
 $total = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
@@ -52,10 +54,12 @@ $total = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 // 2) Obtener registros paginados
 // ==============================
 $query = "
-    SELECT id_noticia, titulonoti, descrinoti, datenoti, noticiaimg, caracteristica
-    FROM noticias
+    SELECT  n.id_noticia as IdNoti, n.titulo as title, cn.contenido as content, n.fecha as fechaC, im.url as imgC
+    FROM noticias as n
+    INNER JOIN imagenes_noticia as im ON n.id_noticia = im.id_noticia  
+    INNER JOIN contenido_noticia as cn ON n.id_noticia = cn.id_noticia
     $where
-    ORDER BY datenoti DESC
+    ORDER BY n.fecha DESC
     LIMIT :limit OFFSET :offset
 ";
 

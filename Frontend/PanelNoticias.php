@@ -9,9 +9,14 @@
     $user = $_SESSION['name'];
 
     //Searching news
-    $SearchNews = $conn->prepare("SELECT * FROM noticias");
+    $SearchNews = $conn->prepare("SELECT * FROM noticias as n INNER JOIN tipo_noticia as tn WHERE n.id_tipo = tn.id_tipo ");
     $SearchNews->execute();
     $NewsResponse = $SearchNews->fetchAll();
+
+    //Searching type news
+    $SearchTypeNews = $conn->prepare("SELECT * FROM tipo_noticia");
+    $SearchTypeNews->execute();
+    $TypeNewsResponse = $SearchTypeNews->fetchAll();
 ?>
 
 <main id="contenido">
@@ -24,26 +29,24 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="row">
-                        <div class="col-md-6">
-                            <label for="Ncomunicado">N. comunicado:</label>
-                            <input type="text" class="form-control" name="Ncomunicado" id="Ncomunicado">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="datenoti">Fecha:</label>
-                            <input type="date" class="form-control" name="datenoti" id="datenoti">
+                        <div class="col-md-12">
+                            <label for="fecha">Fecha:</label>
+                            <input type="date" class="form-control" name="fecha" id="fecha">
                         </div>
                     </div>
                     
                 </div>
                 <div class="col-md-6">
-                    <label for="titulonoti">Título:</label>
-                    <input type="text" class="form-control" name="titulonoti" id="titulonoti">
+                    <label for="titulo">Título:</label>
+                    <input type="text" class="form-control" name="titulo" id="titulo">
                 </div>
                 <div class="col-md-3">
-                    <label for="caracteristica">Boletín/Noticia</label>
-                    <select name="caracteristica" id="caracteristica" class="form-control">
-                        <option value="Boletin">Boletín</option>
-                        <option value="Noticia">Noticia</option>
+                    <label for="id_tipo">Gobierno/Noticia</label>
+                    <select name="id_tipo" id="id_tipo" class="form-control">
+                        <option value="Selecciona un tipo de Boletin">Selecciona un tipo de Boletin</option>
+                        <?php foreach ($TypeNewsResponse as $res) { ?>
+                            <option value="<?php echo $res['id_tipo']; ?>"><?php echo $res['nombre']; ?></option>
+                        <?php } ?>
                     </select>
                 </div>
             </div>
@@ -59,10 +62,6 @@
                 <div class="col-md-4">
                     <label for="my-noticiaimg">Imagen Principal</label>
                     <input id="my-noticiaimg" class="form-control"  type="file" name="noticiaimg">
-                </div>
-                <div class="col-md-4">
-                    <label for="my-noticiaimg2">Imagen Secundaria</label>
-                    <input id="my-noticiaimg2" class="form-control"  type="file" name="noticiaimg2">
                 </div>
                 
                 <div class="col-md-4" style="align-content: end;" >
@@ -86,12 +85,12 @@
                 <tbody class="table-group-divider">
                     <?php foreach($NewsResponse as $row){ ?>
                         <tr>
-                            <td class="articulo" data-toggle="tooltip" title="<?php echo $row['titulonoti']; ?>"  >
+                            <td class="articulo" data-toggle="tooltip" title="<?php echo $row['titulo']; ?>"  >
                                 
-                                <?php echo substr($row['titulonoti'], 0, 50 ); ?>
+                                <?php echo substr($row['titulo'], 0, 50 ); ?>
                             </td>
-                            <td><?php echo $row['caracteristica']; ?></td>
-                            <td><?php echo $row['datenoti']; ?></td>
+                            <td><?php echo $row['nombre']; ?></td>
+                            <td><?php echo $row['fecha']; ?></td>
                             <td>
                                 <a href="<?php echo BASE_URL; ?>EditNews?id_noticia=<?php echo $row['id_noticia']?>" target="_blank" class="card-link btn btn-primary">Vista Previa/Editar</a>
                                 <a href="<?php echo BASE_URL; ?>DeleteNews?id_noticia=<?php echo $row['id_noticia']?> "  class="btn btn-danger">Eliminar</a>

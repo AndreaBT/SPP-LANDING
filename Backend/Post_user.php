@@ -15,13 +15,13 @@ if (isset($_POST['btnregistrar'])) {
     //encrypting the password
     $encryptpass = password_hash($Password, PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO usuarios  (username, contrasenia, rol) 
-    VALUES (:username, :contrasenia, :rol)";
+    $sql = "INSERT INTO usuarios  (username, contrasenia, id_rol) 
+    VALUES (:username, :contrasenia, :id_rol)";
 
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':username', $UserName);
     $stmt->bindParam(':contrasenia', $encryptpass );
-    $stmt->bindParam(':rol', $Rol);
+    $stmt->bindParam(':id_rol', $Rol);
 
     //Redirection
     if ($stmt->execute()) {

@@ -18,6 +18,7 @@
         <div class="collapse navbar-collapse" id="navMain">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
                 <li class="nav-item"><a class="nav-link Juramedium" href="<?php echo BASE_URL; ?>Usuario">Panel</a></li>
+                <li class="nav-item"><a class="nav-link Juramedium" href="<?php echo BASE_URL; ?>Roles">Roles</a></li>
                 <li class="nav-item"><a class="nav-link Juramedium" href="<?php echo BASE_URL; ?>PanelNoticias">Noticias/Boletines</a></li>
                 <li class="nav-item"><a class="btn btn-danger" href="<?php echo BASE_URL; ?>LogOut">LogOut</a></li>
             </ul>

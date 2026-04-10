@@ -65,19 +65,19 @@ RewriteCond %{REQUEST_URI} !^/Backend/Delete_User\.php$
 RewriteRule ^Backend/ - [F,L]
 
 # -------------------------------------------------
-# 🔒 5. PROTECCIÓN HOTLINK IMÁGENES
+# 5. PROTECCIÓN HOTLINK IMÁGENES
 # -------------------------------------------------
 
-#COMNETAR CUANDO ESTE EN LOCAL
-#RewriteCond %{HTTP_REFERER} !^$
-#RewriteCond %{HTTP_REFERER} !^https://cuatro-ojos\.com\.mx [NC]
-#RewriteRule \.(jpg|jpeg|png|webp)$ - [F]
+#COMNETAR CUANDO ESTE EN LOCAL- CAMBIAR LA URL AL MOMENTO DE TENER LA NUEVA
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^https://cuatro-ojos\.com\.mx [NC]
+RewriteRule \.(jpg|jpeg|png|webp)$ - [F]
 
 # -------------------------------------------------
 # 🔒 6. Forzar HTTPS (activar solo si ya tienes SSL)
 # -------------------------------------------------
-#RewriteCond %{HTTPS} off
-#RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # -------------------------------------------------
 # 🔒 7. HEADERS DE SEGURIDAD
@@ -179,6 +179,7 @@ RewriteRule ^Fortaseg$ Frontend/Fortaseg.php [L]
 # -------------------------------------------------
 RewriteRule ^LogIn$ Frontend/Login.php [L]
 RewriteRule ^Usuario$ Frontend/Panel.php [L]
+RewriteRule ^Roles$ Frontend/Roles.php [L]
 RewriteRule ^PanelNoticias$ Frontend/PanelNoticias.php [L]
 RewriteRule ^LogOut$ Backend/Post_LogOut.php [L]
 RewriteRule ^DeleteNews$ Backend/Delete_Noticia.php [L]

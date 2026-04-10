@@ -4,43 +4,89 @@ include '../dbsettings/conexion.php';
 
 //receiving the data from the front
 $id_noticia = $_POST["id_noticia"];
+
+
 $tipo = $_FILES['noticiaimg']['type'];
 $temp  = $_FILES['noticiaimg']['tmp_name'];
 
-$tipo2 = $_FILES['noticiaimg2']['type'];
-$temp2  = $_FILES['noticiaimg2']['tmp_name'];
-
-$imagen = $_FILES['noticiaimg']['name'];
-$descripcion2 = "";
-$Tnoticia = "";
-$imagen2 = $_FILES['noticiaimg2']['name'];
-$caracteristica = $_POST['caracteristica'];
-$fecha = $_POST['datenoti'];
-$Titulo = $_POST['titulonoti'];
-$descripcion = $_POST['txtDescripcion'];
-$Ncomunicado = $_POST['Ncomunicado'];
+$titulo = $_POST['titulo'];
+$fecha = $_POST['fecha'];
+$id_tipo  = $_POST['id_tipo'];
+$comunicado = "";
 
 
-$sql = "UPDATE  noticias set titulonoti =:titulonoti , noticiaimg =:noticiaimg ,descrinoti =:descrinoti ,
-noticiaimg2 =:noticiaimg2, Tnoticia =:Tnoticia, descripcion2=:descripcion2,caracteristica=:caracteristica,datenoti=:datenoti, Ncomunicado=:Ncomunicado   WHERE id_noticia = :id_noticia";
+$conn->beginTransaction();
 
-$stmt = $conn->prepare($sql);
-$stmt->bindParam(':id_noticia', $id_noticia);
-$stmt->bindParam(':titulonoti', $Titulo);
-$stmt->bindParam(':noticiaimg', $imagen );
-$stmt->bindParam(':descrinoti', $descripcion);
-$stmt->bindParam(':noticiaimg2', $imagen2);
-$stmt->bindParam(':Tnoticia', $Tnoticia);
-$stmt->bindParam(':descripcion2', $descripcion2);
-$stmt->bindParam(':caracteristica', $caracteristica);
-$stmt->bindParam(':datenoti', $fecha);
-$stmt->bindParam(':Ncomunicado', $Ncomunicado);
+try {
+    //UPDATE 1: noticias
+    $sql = "UPDATE  noticias set titulo =:titulo , fecha =:fecha ,id_tipo =:id_tipo, comunicado =:comunicado 
+    WHERE id_noticia = :id_noticia";
 
-move_uploaded_file($temp,'../panel/imgnoticia/'.$imagen);  
-move_uploaded_file($temp2,'../panel/imgnoticia/'.$imagen2);
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id_noticia', $id_noticia);
+    $stmt->bindParam(':titulo', $titulo);
+    $stmt->bindParam(':fecha', $fecha);
+    $stmt->bindParam(':id_tipo', $id_tipo);
+    $stmt->bindParam(':comunicado', $comunicado);
 
-if ($stmt->execute()) {
+    $stmt->execute();
+
+    //UPDATE 2: imagenes_noticia
+    $imagen_default = 'banner_ssp_informa_web.png';
+    $imagen = $imagen_default;
+
+    if (!empty($_FILES['noticiaimg']['name'])) {
+        $nombreOriginal = $_FILES['noticiaimg']['name'];
+        $temp = $_FILES['noticiaimg']['tmp_name'];
+        $extension = strtolower(pathinfo($nombreOriginal, PATHINFO_EXTENSION));
+
+        $extensionesPermitidas = ['jpg', 'jpeg', 'png', 'webp'];
+        if (in_array($extension, $extensionesPermitidas)) {
+            // Generar nombre único
+            $imagen = 'noticia_' . $id_noticia . '_' . uniqid() . '.' . $extension;
+
+            if (!move_uploaded_file($temp, '../panel/imgnoticia/' . $imagen)) {
+                // Si falla la subida, usar default
+                $imagen = $imagen_default;
+            }
+
+        } else {
+            // Extensión no válida, usar default
+            $imagen = $imagen_default;
+        }
+
+        $sql2 = "UPDATE imagenes_noticia SET url = :url 
+        WHERE id_noticia = :id_noticia";
+
+        $stmt2 = $conn->prepare($sql2);
+        $stmt2->bindParam(':id_noticia', $id_noticia);
+        $stmt2->bindParam(':url', $imagen);
+        $stmt2->execute();
+    }
+
+    //UPDATE 3: Contenido_noticia
+    $contenido = $_POST['txtDescripcion'];
+
+    $sql3 = "UPDATE contenido_noticia SET contenido =:contenido
+    WHERE id_noticia = :id_noticia";
+
+    $stmt3 = $conn->prepare($sql3);
+    $stmt3->bindParam(':id_noticia', $id_noticia);
+    $stmt3->bindParam(':contenido', $contenido);
+
+    $stmt3->execute();
+
+    // Confirmar todo
+    $conn->commit();
+
+    $_SESSION['mensaje'] = 'Se ha actualizado correctamente';
+    $_SESSION['tipo'] = 'success';
+
     header("Location: " . BASE_URL . "Frontend/PanelNoticias.php");
-} else {
-    header("Location: " . BASE_URL . "Frontend/PanelNoticias.php");
+
+} catch (Exception $e) {
+    $conn->rollBack();
+    echo "Error: " . $e->getMessage();
+    exit;
 }
+

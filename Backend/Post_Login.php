@@ -22,8 +22,8 @@ $id = "";
 $rol = "";
 foreach ($results as $res) {
     $contra = $res["contrasenia"];
-    $id = $res["Id_user"];
-    $rol = $res["rol"];
+    $id = $res["id_user"];
+    $rol = $res["id_rol"];
 
     if (password_verify($_POST['contrasenia'],$res["contrasenia"])) {
         // la conexion sería exitosa, se crea la sesión

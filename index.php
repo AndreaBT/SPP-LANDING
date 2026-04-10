@@ -6,12 +6,20 @@
     include_once('head.php');
     include_once('navbar.php');
 
-    $Sboletin = 'SELECT * FROM noticias  where caracteristica = "Boletin" ORDER BY datenoti DESC LIMIT 4';
+    $Sboletin = 'SELECT * FROM noticias as n 
+    INNER JOIN imagenes_noticia as im ON n.id_noticia = im.id_noticia  
+    INNER JOIN contenido_noticia as cn ON n.id_noticia = cn.id_noticia
+    where n.id_tipo = 2 ORDER BY n.fecha DESC LIMIT 4';
+
     $Sboletin = $conn->prepare($Sboletin);
     $Sboletin->execute();
     $boletin = $Sboletin->fetchAll();
 
-    $Snoticias = 'SELECT * FROM noticias  where caracteristica = "Noticia" ORDER BY datenoti DESC LIMIT 4';
+    $Snoticias = 'SELECT * FROM noticias as n 
+    INNER JOIN imagenes_noticia as im ON n.id_noticia = im.id_noticia  
+    INNER JOIN contenido_noticia as cn ON n.id_noticia = cn.id_noticia
+    where n.id_tipo = 1 ORDER BY n.fecha DESC LIMIT 4';
+
     $Snoticias = $conn->prepare($Snoticias);
     $Snoticias->execute();
     $noticias = $Snoticias->fetchAll();
@@ -104,16 +112,16 @@
                 <?php foreach ($boletin as $res) { ?>
                     <div class="col-12 col-sm-6 col-lg-3">
                         <article class="card-ssp">
-                            <a href="<?php echo BASE_URL; ?>Docs?id_noticia=<?php echo (int)$res['id_noticia']; ?>"   rel="noopener" aria-label="Abrir nota <?php echo htmlspecialchars($res['titulonoti'], ENT_QUOTES, 'UTF-8'); ?>">
+                            <a href="<?php echo BASE_URL; ?>Docs?titulo=<?php echo $res['titulo']; ?>"   rel="noopener" aria-label="Abrir nota <?php echo htmlspecialchars($res['titulo'], ENT_QUOTES, 'UTF-8'); ?>">
                                 <img 
                                     class="thumb" 
-                                    src="panel/imgnoticia/<?php echo htmlspecialchars($res['noticiaimg'], ENT_QUOTES, 'UTF-8'); ?>" 
-                                    alt="<?php echo htmlspecialchars($res['titulonoti'], ENT_QUOTES, 'UTF-8'); ?>" 
+                                    src="panel/imgnoticia/<?php echo htmlspecialchars($res['url'], ENT_QUOTES, 'UTF-8'); ?>" 
+                                    alt="<?php echo htmlspecialchars($res['titulo'], ENT_QUOTES, 'UTF-8'); ?>" 
                                 />
                                 <div class="body Juramedium">
-                                    <h3 style="text-transform: uppercase;" class="Russ h6 title mb-2"><?php echo htmlspecialchars($res['titulonoti'], ENT_QUOTES, 'UTF-8'); ?></h3>
+                                    <h3 style="text-transform: uppercase;" class="Russ h6 title mb-2"><?php echo htmlspecialchars($res['titulo'], ENT_QUOTES, 'UTF-8'); ?></h3>
                                     <?php
-                                        $descripcionNot = strip_tags($res['descrinoti']);
+                                        $descripcionNot = strip_tags($res['contenido']);
                                         $descripcionNot = mb_substr($descripcionNot, 0, 160);
                                     ?>
                                     <p class="Juramedium small mb-0"><?php echo htmlspecialchars($descripcionNot, ENT_QUOTES, 'UTF-8'); ?>...</p>
@@ -145,16 +153,16 @@
                 <?php foreach ($noticias as $res) { ?>
                     <div class="col-12 col-sm-6 col-lg-3">
                         <article class="card-ssp">
-                            <a href="<?php echo BASE_URL; ?>Docs?id_noticia=<?php echo (int)$res['id_noticia']; ?>"   rel="noopener" aria-label="Abrir nota <?php echo htmlspecialchars($res['titulonoti'], ENT_QUOTES, 'UTF-8'); ?>">
+                            <a href="<?php echo BASE_URL; ?>Docs?titulo=<?php echo $res['titulo']; ?>"   rel="noopener" aria-label="Abrir nota <?php echo htmlspecialchars($res['titulo'], ENT_QUOTES, 'UTF-8'); ?>">
                                 <img 
                                     class="thumb" 
-                                    src="panel/imgnoticia/<?php echo htmlspecialchars($res['noticiaimg'], ENT_QUOTES, 'UTF-8'); ?>" 
-                                    alt="<?php echo htmlspecialchars($res['titulonoti'], ENT_QUOTES, 'UTF-8'); ?>" 
+                                    src="panel/imgnoticia/<?php echo htmlspecialchars($res['url'], ENT_QUOTES, 'UTF-8'); ?>" 
+                                    alt="<?php echo htmlspecialchars($res['titulo'], ENT_QUOTES, 'UTF-8'); ?>" 
                                 />
                                 <div class="body Juramedium">
-                                    <h3 style="text-transform: uppercase;" class="Russ h6 title mb-2"><?php echo htmlspecialchars($res['titulonoti'], ENT_QUOTES, 'UTF-8'); ?></h3>
+                                    <h3 style="text-transform: uppercase;" class="Russ h6 title mb-2"><?php echo htmlspecialchars($res['titulo'], ENT_QUOTES, 'UTF-8'); ?></h3>
                                     <?php
-                                        $descripcionNot = strip_tags($res['descrinoti']);
+                                        $descripcionNot = strip_tags($res['contenido']);
                                         $descripcionNot = mb_substr($descripcionNot, 0, 160);
                                     ?>
                                     <p class="Juramedium small mb-0"><?php echo htmlspecialchars($descripcionNot, ENT_QUOTES, 'UTF-8'); ?>...</p>

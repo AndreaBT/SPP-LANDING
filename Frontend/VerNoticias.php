@@ -5,16 +5,19 @@ include_once(ROOT_PATH . 'head.php');
 include_once(ROOT_PATH . 'navbar.php');
 include '../dbsettings/conexion.php';
 
-$id_noticia = $_GET["id_noticia"];
+$titulo = $_GET["titulo"];
 
 //Searching news
-$SearchNews = $conn->prepare("SELECT * FROM noticias where id_noticia ='$id_noticia'");
+$SearchNews = $conn->prepare("SELECT * FROM noticias as n
+INNER JOIN imagenes_noticia as im ON n.id_noticia = im.id_noticia  
+INNER JOIN contenido_noticia as cn ON n.id_noticia = cn.id_noticia
+where n.titulo ='$titulo'");
 $SearchNews->execute();
 $NewsResponse = $SearchNews->fetchAll();
 
 $Title_article ="";
 foreach ($NewsResponse as $res) {
-    $Title_article = $res['titulonoti'];
+    $Title_article = $res['titulo'];
 }
 ?>
 
@@ -23,37 +26,31 @@ foreach ($NewsResponse as $res) {
         <section class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2 style="color:#3f3e40 !important" class="Russ"><?php echo $res['titulonoti'] ?></h2>
+                    <h2 style="color:#3f3e40 !important" class="Russ"><?php echo $res['titulo'] ?></h2>
                 </div>
             </div>
             
             <div class="row">
                 <div class="col-md-12">
-                    <p style="color:#3f3e40 !important"  class="Juramedium" style="color:#eaecef"><?php echo $res['datenoti'] ?></p>
+                    <p style="color:#3f3e40 !important"  class="Juramedium" style="color:#eaecef"><?php echo $res['fecha'] ?></p>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12"  style=" overflow:hidden; text-align:center">
                     <img class="noticia-img"
-                        src="<?php echo BASE_URL; ?>panel/imgnoticia/<?php echo $res['noticiaimg']; ?>" 
+                        src="<?php echo BASE_URL; ?>panel/imgnoticia/<?php echo $res['url']; ?>" 
                         alt="Imagen noticia">
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12 Juramedium" >
-                    <p  style="color:#3f3e40 !important" class="Juramedium" ><?php echo $res['descrinoti'] ?></p>
+                    <p  style="color:#3f3e40 !important" class="Juramedium" ><?php echo $res['contenido'] ?></p>
                 </div>
             </div>
 
-            <?php if ($res['noticiaimg2'] != "") { ?>
-                <div class="row">
-                    <div class="col-md-12" style=" overflow:hidden; text-align:center">
-                        <img style="width:871px; height:537px; object-fit: contain;" src="<?php echo BASE_URL; ?>panel/imgnoticia/<?php echo $res['noticiaimg2']; ?>"   alt="...">
-                    </div>
-                </div>
-            <?php } ?>
+           
         </section>
     </main>
 <?php } ?>

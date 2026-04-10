@@ -26,7 +26,7 @@ function renderNews(news) {
     container.innerHTML = "";
 
     news.forEach(n => {
-        const date = new Date(n.datenoti).toLocaleDateString("es-MX");
+        const date = new Date(n.fecha).toLocaleDateString("es-MX");
 
         const card = document.createElement("div");
         card.classList.add("news-card");
@@ -34,15 +34,15 @@ function renderNews(news) {
         //const imgPath = n.noticiaimg ? n.noticiaimg : "../panel/imgnoticia/banner ssp informa web jpg.jpg";
 
         card.innerHTML = `
-            <a href="${BASE_URL}Docs?id_noticia=${n.id_noticia}"  target="_blank" rel="noopener">
-                <img src="${BASE_URL}panel/imgnoticia/${n.noticiaimg}" alt="Imagen noticia" class="news-img">
+            <a href="${BASE_URL}Docs?titulo=${n.title}"  target="_blank" rel="noopener">
+                <img src="${BASE_URL}panel/imgnoticia/${n.imgC}" alt="Imagen noticia" class="news-img">
 
                 <div class="news-info">
-                    <h3 class="Russ" >${n.titulonoti}</h3>
-                    <div class="Juramedium" style="color:#64748b !important">${n.datenoti}</div>
+                    <h3 style="text-transform: uppercase;" class="Russ" >${n.title}</h3>
+                    <div class="Juramedium" style="color:#64748b !important">${n.fechaC}</div>
 
                     <p class="Juramedium" >
-                        ${n.descrinoti.substr(0, 150)}...
+                        ${n.content.substr(0, 150)}...
                     </p>
 
 
